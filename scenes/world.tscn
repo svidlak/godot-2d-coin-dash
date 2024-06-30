@@ -1,0 +1,42 @@
+[gd_scene load_steps=10 format=3 uid="uid://dy8w6xndsfbvh"]
+
+[ext_resource type="Texture2D" uid="uid://b5y3we260iimb" path="res://assets/grass.png" id="1_0xphn"]
+[ext_resource type="Script" path="res://scripts/world.gd" id="1_v1old"]
+[ext_resource type="PackedScene" uid="uid://dc0557tii65gy" path="res://scenes/player.tscn" id="2_1lxtv"]
+[ext_resource type="PackedScene" uid="uid://c3p2unfmmh58y" path="res://scenes/hud.tscn" id="2_ry02t"]
+[ext_resource type="PackedScene" uid="uid://bcuvwektuq37i" path="res://scenes/coin.tscn" id="3_k7m7j"]
+[ext_resource type="PackedScene" uid="uid://djsy0703uh2ag" path="res://scenes/powerup.tscn" id="3_pi87u"]
+[ext_resource type="PackedScene" uid="uid://cphv6o8xm78pb" path="res://scenes/cactus.tscn" id="4_phnj2"]
+[ext_resource type="AudioStream" uid="uid://80wouv4asbml" path="res://assets/audio/EndSound.wav" id="6_52jhl"]
+[ext_resource type="AudioStream" uid="uid://jow5ccu5na08" path="res://assets/audio/Level.wav" id="7_oy002"]
+
+[node name="World" type="Node"]
+script = ExtResource("1_v1old")
+coin_scene = ExtResource("3_k7m7j")
+powerup_scene = ExtResource("3_pi87u")
+cactus_scene = ExtResource("4_phnj2")
+
+[node name="Background" type="TextureRect" parent="."]
+offset_left = -19.0
+offset_top = -11.0
+offset_right = 496.0
+offset_bottom = 731.0
+texture = ExtResource("1_0xphn")
+stretch_mode = 1
+
+[node name="Player" parent="." instance=ExtResource("2_1lxtv")]
+
+[node name="HUD" parent="." instance=ExtResource("2_ry02t")]
+
+[node name="GameTime" type="Timer" parent="."]
+
+[node name="EndSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_52jhl")
+
+[node name="LevelSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_oy002")
+
+[connection signal="end_game_signal" from="Player" to="." method="_on_player_end_game_signal"]
+[connection signal="pickup" from="Player" to="." method="_on_player_pickup"]
+[connection signal="start_game" from="HUD" to="." method="_on_hud_start_game"]
+[connection signal="timeout" from="GameTime" to="." method="_on_game_time_timeout"]

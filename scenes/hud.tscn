@@ -1,0 +1,77 @@
+[gd_scene load_steps=4 format=3 uid="uid://c3p2unfmmh58y"]
+
+[ext_resource type="FontFile" uid="uid://dohnmfyvh1mmr" path="res://assets/Kenney Bold.ttf" id="1_pib5o"]
+[ext_resource type="Script" path="res://scripts/hud.gd" id="1_y6pqu"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_tj25c"]
+font = ExtResource("1_pib5o")
+font_size = 52
+shadow_size = 4
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(4, 4)
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_y6pqu")
+
+[node name="GameText" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -39.0
+offset_top = -11.5
+offset_right = 39.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Coin Dash"
+label_settings = SubResource("LabelSettings_tj25c")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 33.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Score" type="Label" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_pib5o")
+theme_override_font_sizes/font_size = 22
+text = "0"
+
+[node name="TimeLeft" type="Label" parent="MarginContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_pib5o")
+theme_override_font_sizes/font_size = 22
+text = "0"
+
+[node name="Button" type="Button" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -48.0
+offset_top = -31.0
+offset_right = 48.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("1_pib5o")
+theme_override_font_sizes/font_size = 32
+text = "Start Game"
+
+[node name="EndGameTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
+[connection signal="button_up" from="Button" to="." method="_on_button_button_up"]
+[connection signal="timeout" from="EndGameTimer" to="." method="_on_end_game_timer_timeout"]
